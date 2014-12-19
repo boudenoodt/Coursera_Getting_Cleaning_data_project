@@ -2,7 +2,9 @@ library(plyr)
 
 ## ****************************************************************************************************
 ## reading the variable names from features.txt and clean up as far as possible by:
-##      eliminating illegal characters ("()","(",")","-",",") 
+##      correction in features.txt file changing the errorneous "angle(tBodyAccMean,gravity)"
+##      feature name by and replace by  "angle(tBodyAccMean,gravityMean)"  (adding "Mean" at the end
+##		eliminating illegal characters ("()","(",")","-",",") 
 ##      making the variable names unique by adding a sequence number ("1","2") by using make.unique()
 ##      replacing "BodyBody" in some names by "Body"  f.ex "fBodyBodyGyroMag-mad()"
 ##      replacing the begin characters "t" and "f" by a more meaning full "time" and "freq"
@@ -11,6 +13,7 @@ library(plyr)
 
 features<-read.csv(".\\UCI HAR Dataset\\features.txt",header=FALSE,sep="")
 corrected_features_names<-gsub("\\(\\)","",features$V2)                    ## replace "()" by an empty string
+corrected_features_names<-gsub("angle\\(tBodyAccMean,gravity\\)","angle\\(tBodyAccMean,gravityMean\\)",corrected_features_names)    ## replace "angle(tBodyAccMean,gravity)" by angle(tBodyAccMean,gravityMean)"
 corrected_features_names<-gsub("[\\)\\(]","-",corrected_features_names)    ## replace 
 corrected_features_names<-gsub("\\-",".",corrected_features_names)         ## replace "-" by "."
 corrected_features_names<-gsub("\\,",".",corrected_features_names)         ## replace "," by "."
@@ -84,25 +87,30 @@ x_train<-cbind(sub_train,x_train)
 x_train_test<-rbind(x_train,x_test)
 
 ## select mean / Mean / std / subject_id / activity_id variables only
-## remove the variables/column related to "angle" (7 pieces)
+## keep the variables/column related to "angle" (7 pieces)
+## eliminate the variables with mean in the middle of the name ("...meanFreq...")
 ## and keep only those variabled/columns by subsetting  and "select"
-vars_to_retain<-corrected_features_names[grepl("mean|Mean|std",corrected_features_names)]
-vars_to_retain<-vars_to_retain[!grepl("^angle",vars_to_retain)]
-vars_to_retain<-c("subject_id","activity_id",as.character(vars_to_retain))
-x_train_test_mean_std_only<-subset(x_train_test,select=vars_to_retain)
+ vars_to_retain<-corrected_features_names[grepl("mean$|Mean$|std$|mean.|Mean.|std.",corrected_features_names)] 
+## eliminate the variables/column with "meanFreq" in the name as this are probably not real means (I guess)
+ vars_to_retain<-vars_to_retain[!grepl("meanFreq",vars_to_retain)] 
+ vars_to_retain<-c("subject_id","activity_id",as.character(vars_to_retain))
+ x_train_test_mean_std_only<-subset(x_train_test,select=vars_to_retain)
 
 ## Replace the "activity_id" by the activity labels and change the column order
 ## ("LAYING","SITTING","STANDING","WALKING","WALKING_DOWNSTAIRS","WALKING_UPSTAIRS") using the merge fuction
 x_train_test_mean_std_only<-merge(x=x_train_test_mean_std_only,y=activity_labels,by.x="activity_id",by.y="activity_id")
-x_train_test_mean_std_only<-subset(x_train_test_mean_std_only,select=c(2,82,3:81))
+x_train_test_mean_std_only<-subset(x_train_test_mean_std_only,select=c(2,76,3:75))
 
 ## calculate the mean for every combination of people/activity/variable using ddply from the "plyr" package
 x_train_test_mean_std_only<-ddply(x_train_test_mean_std_only,as.quoted(c("subject_id","activity")),colwise(mean))
 ## change the varable/column names to start with "mean.of." since now it is the mean of "a mean" or a "std"
-colnames(x_train_test_mean_std_only)<-c("subject_id","activity",paste0("mean.of.",colnames(x_train_test_mean_std_only[3:81])))
+colnames(x_train_test_mean_std_only)<-c("subject_id","activity",paste0("mean.of.",colnames(x_train_test_mean_std_only[3:75])))
 
 ## script output
 x_train_test_mean_std_only
-## code to write the table to a text file
-# #write.table(x_train_test_mean_std_only, file = "Human_Activity_Recognition_summary.txt",row.names=FALSE)
 
+
+## code to write the table to a text file
+## write.table(x_train_test_mean_std_only, file = "Human_Activity_Recognition_summary.txt",row.names=FALSE)
+## code to read the data back in a data.frame
+## Human_Activity_Recognition_summary<-read.csv("Human_Activity_Recognition_summary.txt", header=TRUE, sep="")
