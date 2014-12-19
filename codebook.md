@@ -95,8 +95,8 @@ Still later in the process a subset of fatues/variables/columns was taken to be 
 
 The following image might give a better id of the whole setup and process and end result.
 
-![Image of the structure of the tidy dataset]  (https://github.com/boudenoodt/Coursera_Getting_Cleaning_data_project/blob/master/Human_activity_dataset_shema.png)
-
+Further down this document you find a datashema that might help t explain
+the relations between this data
 
 ### Explaining the selection of variables
 
