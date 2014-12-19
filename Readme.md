@@ -130,7 +130,7 @@ Still later in the process a subset of fatues/variables/columns was taken to be 
 
 The following image might give a better id of the whole setup and process.
 
-![Image of the structure of the tidy dataset]  (https://octodex.github.com/images/yaktocat.png)
+![Image of the structure of the tidy dataset]  (https://github.com/boudenoodt/Coursera_Getting_Cleaning_data_project/blob/master/Human_activity_dataset_shema.png)
 
 
 ## The "process  to obtain the  "tidy" dataset (R code explained)
