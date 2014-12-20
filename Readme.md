@@ -133,6 +133,9 @@ From the original dataset  we kept only the variables/columns that had  a mean v
 
 > * also variables with "angle" in the name are not taking into consideration because they are more moving averages (I guess)
 
+The following image might give a better id of the whole setup and process.
+
+![Image of the structure of the tidy dataset]  (https://github.com/boudenoodt/Coursera_Getting_Cleaning_data_project/blob/master/Human_activity_dataset_shema.png)
 
 ### Part I -- Reading the variable/column names and the activity labels
 
