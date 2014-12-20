@@ -66,16 +66,20 @@ Additional vectors obtained by averaging the signals in a signal window sample. 
 * tBodyGyroJerkMean
 
 The complete list with all combinations  contains 561 variables/columns
+
 Also provided:
  * A file with the 6 possible activities each of the six rows containing an activity Id (1-6) and an activity_label ((WALKING,SITTING...)
  * 2 files containing the subject id for each row in the dataset (one to one relationship) one file for test data and one file for training data
  * 2 files files containing the activity id for each row in the dataset (one to one relationship) one file for test data and one file for training data
 
-The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data. 
+
 
 ## the analysis and tranformations 
 
-The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data. 
+For our jog we need only 66 variables out of the 561.
+Only the mean() and std() varriables are necessary with the correponding activity en subject.
+
+The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data.
 
 This results in two datasets a test and a training dataset file "X_train.txt" (7352 rows 561 columns) and a "X_test.txt" (2947 rows 561 columns ) file each having 561 feature/measurments columns/variables but without headers or person info or activity info.
 The corresponding 561 headers are inside a text file "features.txt" and correspond one to one with the 561 feature columns and will be used as headers. These headers are then used to select the variables/colums/features with "mean" or "std" in their names.
@@ -95,18 +99,23 @@ Still later in the process a subset of fatues/variables/columns was taken to be 
 
 The following image might give a better id of the whole setup and process and end result.
 
-Further down this document you find a datashema that might help t explain
+Further down this document you find a datashema that might help  explain
 the relations between this data
 
-### Explaining the selection of variables
 
-From the original dataset  we kept only the variables/columns indicating a mean value or a standard deviation ("std" or "mean") a defined in the "features_info.txt" file  saying:
+For a more detailed explanation see the Readme file
+
+### Explaining the selection of variables in the tidy dataset
+
+From the original dataset  we kept only the variables/columns that had  a mean value and a standard deviation ("std" or "mean") a defined in the "features_info.txt" file  saying:
 >* The set of variables that were estimated from these signals are: mean() std()
->* "Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:gravityMean /tBodyAccMean /tBodyAccJerkMean /tBodyGyroMean /tBodyGyroJerkMean
+
 >* this means that variable names with "mean" somewhere in the middle (f.ex ...meanFreq...) are eliminated.
 
+> * also variables with "angle" in the name are not taking into consideration because they are more moving averages (I guess)
 
-### the cleanup of the dataset
+
+### the cleanup of raw the dataset
 
 
 * correction in features.txt file changing the errorneous "angle(tBodyAccMean,gravity)"
@@ -126,13 +135,8 @@ The following image might give a better id of the whole setup and process.
 ![Image of the structure of the tidy dataset]  (https://github.com/boudenoodt/Coursera_Getting_Cleaning_data_project/blob/master/Human_activity_dataset_shema.png)
 
 
-From the original dataset  we kept only the variables/columns indicating a mean value or a standard deviation ("std" or "mean") a defined in the "features_info.txt" file  saying:
->* The set of variables that were estimated from these signals are: mean() std()
->* "Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:gravityMean /tBodyAccMean /tBodyAccJerkMean /tBodyGyroMean /tBodyGyroJerkMean
->* this means that variable names with "mean" somewhere in the middle (f.ex ...meanFreq...) are eliminated.
- 
-The dimension of this tidy dataset is 180 rows and 75 variables/columns
-Each row gives the "mean.of."  features (73) for each combination of subject and activity resulting in 30 (subjects) * 6 (activities) = 180 rows.
+The dimension of this tidy dataset is 180 rows and 68 variables/columns
+Each row gives the "mean.of."  features (66) for each combination of subject and activity resulting in 30 (subjects) * 6 (activities) = 180 rows.
 
 subject_id                                 
 activity                                   
@@ -202,15 +206,8 @@ mean.of.freqBodyGyroMag.mean
 mean.of.freqBodyGyroMag.std                
 mean.of.freqBodyGyroJerkMag.mean           
 mean.of.freqBodyGyroJerkMag.std            
-mean.of.angle.tBodyAccMean.gravityMean     
-mean.of.angle.tBodyAccJerkMean.gravityMean 
-mean.of.angle.tBodyGyroMean.gravityMean    
-mean.of.angle.tBodyGyroJerkMean.gravityMean
-mean.of.angle.X.gravityMean                
-mean.of.angle.Y.gravityMean                
-mean.of.angle.Z.gravityMean 
-                         
 
+                        
 The subject_id variable/column:
 * identifies a participant  
 * has a value between 1 and 30 (30 participants).
@@ -220,6 +217,6 @@ The activity variable/column:
 * can have one of the six values: ("WALKING","WALKING_UPSTAIRS","WALKING_DOWNSTAIRS","SITTING","STANDING","LAYING")
 
 All other variables/columns:
-* contain numeric data
+* contain numeric data 
 * are normalized and bounded within [-1,1]. so units are gone
 * are the means of other means or standard deviations so  "mean.of." was added to name
