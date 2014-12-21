@@ -95,7 +95,9 @@ For each dataset (test/training ) there are two correponding files  with a one t
 
 >the activity ids in the extended dataset will be replaced with the activity labels. This information  comes from a text file "activity_labels.txt" which has two colums one colum with the activity id and one with the activity label. There are six rows one for each label. This activity_id will be used to replace the activity_id's in the dataset with the more meaningfull activity labels.
 
-Still later in the process a subset of fatues/variables/columns was taken to be used in the calculation of the means followed by rearranging the column order.
+Still later in the process a subset of 66 featues/variables/columns was taken to be used in the calculation of the means followed by rearranging the column order.
+
+Finally the mean (of the mean and the std -- 66 columns)  by subject and activity where taken 
 
 The following image might give a better id of the whole setup and process and end result.
 
