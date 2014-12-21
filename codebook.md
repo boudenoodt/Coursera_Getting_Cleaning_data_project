@@ -128,6 +128,7 @@ feature name by and replace by  "angle(tBodyAccMean,gravityMean)"  (adding "Mean
 * replacing the begin characters "t" and "f" by a more meaning full "time" and "freq"
 * eliminatng the end points (".") which do not make sense
 
+Remark: In order to keep all names of the variables readable for a human being and eliminating all illegal characters I decided to use the character "." Another possibility was f.ex to use  the underscore character "_" or a combination. 
 
 ## The  "tidy" dataset
 
