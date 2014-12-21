@@ -11,6 +11,8 @@ Via Opera Pia 11A, I-16145, Genoa, Italy.
 activityrecognition@smartlab.ws
 www.smartlab.ws
 
+Since we use this dataset...
+
 License:
 
 >Use of this dataset in publications must be acknowledged by referencing the following publication 
@@ -31,23 +33,8 @@ These signals were used to estimate variables of the feature vector for each pat
 
 The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data. 
 
-* tBodyAcc-XYZ
-* tGravityAcc-XYZ
-* tBodyAccJerk-XYZ
-* tBodyGyro-XYZ
-* tBodyGyroJerk-XYZ
-* tBodyAccMag
-* tGravityAccMag
-* tBodyAccJerkMag
-* tBodyGyroMag
-* tBodyGyroJerkMag
-* fBodyAcc-XYZ
-* fBodyAccJerk-XYZ
-* fBodyGyro-XYZ
-* fBodyAccMag
-* fBodyAccJerkMag
-* fBodyGyroMag
-* fBodyGyroJerkMag
+* >tBodyAcc-XYZ, tGravityAcc-XYZ, tBodyAccJerk-XYZ, tBodyGyro-XYZ, tBodyGyroJerk-XYZ, tBodyAccMag, tGravityAccMag, tBodyAccJerkMag,tBodyGyroMag, tBodyGyroJerkMag, fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccMag, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag
+
 
 The set of variables that were estimated from these signals are: 
 
@@ -71,11 +58,8 @@ The set of variables that were estimated from these signals are:
 
 Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
 
-* gravityMean
-* tBodyAccMean
-* tBodyAccJerkMean
-* tBodyGyroMean
-* tBodyGyroJerkMean
+Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:gravityMean, tBodyAccMean, tBodyAccJerkMean, tBodyGyroMean, tBodyGyroJerkMean
+
 
 The complete list with all combinations contains 561 variables
 For each record it is provided:
@@ -85,10 +69,27 @@ For each record it is provided:
 * Its activity label. 
 * An identifier of the subject who carried out the experiment.
 
-Also provided:
- * A file with the 6 possible activities each of the six rows containing an activity Id (1-6) and an activity_label ((WALKING,SITTING...)
- * 2 files containing the subject id for each row in the dataset (one to one relationship) one file for test data and one file for training data
- * 2 files files containing the activity id for each row in the dataset (one to one relationship) one file for test data and one file for training data
+## The structure of the provided raw data:
+
+2 sets of files one for the training dataset and one for the test dataset 
+ >related to the test data set
+ >>A file "X_test.txt" with 2947 rows of observations (activities = WALKING / SITTING... ) each row containing a 561 features vector 
+ 
+ >>A file "subject_test.txt" with the subject id (integer from 1 to 30) with 2947 rows (one column) each row corresponding one to one  with each row in the "X_test.txt" dataset
+ 
+ >>A file "Y_test.txt" with the activity id (integer from 1 to 6) with 2947 rows (one column) each row corresponding one to one  with each row in the "X_test.txt" dataset 
+ 
+ >related to the training data set
+ >>A file "X_train.txt" with 7352 rows of observations (activities = WALKING / SITTING... ) each row containing a 561 features vector 
+ 
+ >>A file "subject_train.txt" with the subject id (integer from 1 to 30) with 2947 rows (one column) each row corresponding one to one  with each row in the "X_test.txt" dataset
+ 
+ >>A file "Y_train.txt" with the activity id (integer from 1 to 6) with 7352 rows (one column) each row corresponding one to one  with each row in the "X_train.txt" dataset  
+ 
+A file "features.txt": List of all features (561) (to be used as variables/columns).
+
+A file ("activity_labels.txt") with the 6 possible activities each of the six rows containing an activity Id (1-6) and an activity_label ((WALKING,SITTING...) (to be used to replace the activity id with the activity label)
+
 
 
 ## General overview
@@ -123,6 +124,22 @@ Still later in the process a subset of fatues/variables/columns was taken to be 
 
 
 ## The "process  to obtain the  "tidy" dataset
+
+### the Assigment
+
+You should create one R script called run_analysis.R that does the following.
+
+1 Merges the training and the test sets to create one data set.
+
+2 Extracts only the measurements on the mean and standard deviation for each measurement.
+
+3 Uses descriptive activity names to name the activities in the data set
+
+4 Appropriately labels the data set with descriptive variable names.
+
+5 From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+
 
 ### Explaining the selection of variables in the tidy dataset
 
@@ -368,7 +385,7 @@ x_train_test_mean_std_only<-subset(x_train_test_mean_std_only,select=c(2,69,3:68
 
 
 
-## The  "tidy" dataset
+## The  "tidy" dataset / codebook section
 
 From this database we kept only the variables/columns indicating a mean value or a standard deviation ("std" or "mean") somewhere in the name with the exeption of the 7 variables indicating an "angel".
 The dimension of this tidy dataset is 180 rows and 81 variables/columns
