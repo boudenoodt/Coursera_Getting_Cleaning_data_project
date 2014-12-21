@@ -1,13 +1,20 @@
 ##In this file you will find the following information:
 
->
+>Important notice: "The assignment specs say that the Codebook should have the variables, the data, and any transformations or work you performed to clean up the data"
+
 ##### * The raw data
-##### * The analysis and tranformations
-##### * Explaining the selection of the variables
-##### * the cleanup of the dataset
+>###### * The description of the raw data
+>###### * The structure of the provided raw data
+
+##### * Tranformations
+>###### * Explaining the selection of the variables
+>###### * the cleanup of the dataset
+
 ##### * The  "tidy" dataset
 
 ## The "raw" original data 
+
+### The description of the raw data
 
 (The information in this section is taken directly from the originators of the raw data)
 
@@ -19,23 +26,7 @@ Finally a Fast Fourier Transform (FFT) was applied to some of these signals prod
 
 These signals were used to estimate variables of the feature vector for each pattern: '-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
 
-* tBodyAcc-XYZ
-* tGravityAcc-XYZ
-* tBodyAccJerk-XYZ
-* tBodyGyro-XYZ
-* tBodyGyroJerk-XYZ
-* tBodyAccMag
-* tGravityAccMag
-* tBodyAccJerkMag
-* tBodyGyroMag
-* tBodyGyroJerkMag
-* fBodyAcc-XYZ
-* fBodyAccJerk-XYZ
-* fBodyGyro-XYZ
-* fBodyAccMag
-* fBodyAccJerkMag
-* fBodyGyroMag
-* fBodyGyroJerkMag
+>tBodyAcc-XYZ, tGravityAcc-XYZ, tBodyAccJerk-XYZ, tBodyGyro-XYZ, tBodyGyroJerk-XYZ, tBodyAccMag, tGravityAccMag, tBodyAccJerkMag,tBodyGyroMag, tBodyGyroJerkMag, fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccMag, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag
 
 The set of variables that were estimated from these signals are: 
 
@@ -57,26 +48,35 @@ The set of variables that were estimated from these signals are:
 * bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
 * angle(): Angle between to vectors.
 
-Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
-
-* gravityMean
-* tBodyAccMean
-* tBodyAccJerkMean
-* tBodyGyroMean
-* tBodyGyroJerkMean
+Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:gravityMean, tBodyAccMean, tBodyAccJerkMean, tBodyGyroMean, tBodyGyroJerkMean
 
 The complete list with all combinations  contains 561 variables/columns
 
-Also provided:
- * A file with the 6 possible activities each of the six rows containing an activity Id (1-6) and an activity_label ((WALKING,SITTING...)
- * 2 files containing the subject id for each row in the dataset (one to one relationship) one file for test data and one file for training data
- * 2 files files containing the activity id for each row in the dataset (one to one relationship) one file for test data and one file for training data
+## The structure of the provided raw data:
+
+2 sets of files one for the training dataset and one for the test dataset 
+ >related to the test data set
+ >>A file "X_test.txt" with 2947 rows of observations (activities = WALKING / SITTING... ) each row containing a 561 features vector 
+ 
+ >>A file "subject_test.txt" with the subject id (integer from 1 to 30) with 2947 rows (one column) each row corresponding one to one  with each row in the "X_test.txt" dataset
+ 
+ >>A file "Y_test.txt" with the activity id (integer from 1 to 6) with 2947 rows (one column) each row corresponding one to one  with each row in the "X_test.txt" dataset 
+ 
+ >related to the training data set
+ >>A file "X_train.txt" with 7352 rows of observations (activities = WALKING / SITTING... ) each row containing a 561 features vector 
+ 
+ >>A file "subject_train.txt" with the subject id (integer from 1 to 30) with 2947 rows (one column) each row corresponding one to one  with each row in the "X_test.txt" dataset
+ 
+ >>A file "Y_train.txt" with the activity id (integer from 1 to 6) with 7352 rows (one column) each row corresponding one to one  with each row in the "X_train.txt" dataset  
+ 
+A file "features.txt": List of all features (561) (to be used as variables/columns).
+
+A file ("activity_labels.txt") with the 6 possible activities each of the six rows containing an activity Id (1-6) and an activity_label ((WALKING,SITTING...) (to be used to replace the activity id with the activity label)
 
 
+## Tranformations 
 
-## the analysis and tranformations 
-
-For our jog we need only 66 variables out of the 561.
+For our job we need only 66 variables out of the 561.
 Only the mean() and std() varriables are necessary with the correponding activity en subject.
 
 The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data.
@@ -89,7 +89,7 @@ For each dataset (test/training ) there are two correponding files  with a one t
 
 >* One file contains the number (1-6) identifying an activity (WALKING,SITTING...) (Y_test.txt -- 7352 rows / Y_train.txt -- 2947 rows)
 
->These datasets will then (thanks to the one to one relationship) be matched/merged/joined column bounded  with the datasets so that each combination of subject and activity matches with a row of features of the dataset
+>These datasets will then (thanks to the one to one relationship) be matched/merged/joined column bounded  with the datasets containing activity(observation) and subject  and  so that each combination of subject and activity matches with a row of features of the dataset
 
 >Later on in the process the test and training datasets ,now each merged with the activity and subject id's will be merged (row bounded) together 
 
@@ -107,7 +107,7 @@ For a more detailed explanation see the Readme file
 
 ### Explaining the selection of variables in the tidy dataset
 
-From the original dataset  we kept only the variables/columns that had  a mean value and a standard deviation ("std" or "mean") a defined in the "features_info.txt" file  saying:
+From the original dataset  we kept only the variables/columns that had  a mean value and a standard deviation ("std" and "mean") as defined in the "features_info.txt" file  saying:
 >* The set of variables that were estimated from these signals are: mean() std()
 
 >* this means that variable names with "mean" somewhere in the middle (f.ex ...meanFreq...) are eliminated.
@@ -136,7 +136,7 @@ The following image might give a better id of the whole setup and process.
 
 
 The dimension of this tidy dataset is 180 rows and 68 variables/columns
-Each row gives the "mean.of."  features (66) for each combination of subject and activity resulting in 30 (subjects) * 6 (activities) = 180 rows.
+66 out of 68  gives the "mean.of."  features (66) for each combination of subject and activity resulting in 30 (subjects) * 6 (activities) = 180 rows.
 
 subject_id                                 
 activity                                   
